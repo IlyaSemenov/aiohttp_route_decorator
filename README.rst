@@ -11,6 +11,15 @@ The imaginary `@app.route` decorator is discouraged_ for multiple_ reasons_; thi
 .. _multiple: https://github.com/KeepSafe/aiohttp/issues/428
 .. _reasons: https://github.com/KeepSafe/aiohttp/pull/195
 
+
+Installation
+============
+
+::
+
+        pip install aiohttp_session_decorator
+
+
 Usage
 =====
 
