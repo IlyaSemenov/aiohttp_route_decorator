@@ -32,11 +32,9 @@ Create a ``route`` object in each of your handler modules, and decorate the hand
 
 	route = RouteCollector()
 
-
 	@route('/')
 	async def index(request):
 		return web.Response(body=b'OK')
-
 
 	@route('/login/', methods=['GET', 'POST'], name='login')
 	async def login(request):
@@ -50,9 +48,7 @@ When you init the application, push the collected ``routes`` into ``app.router``
 .. code:: python
 
 	from aiohttp import web
-
 	from myapp import handlers
-
 
 	def run():
 		app = web.Application()
@@ -81,18 +77,13 @@ If you prefer to keep your routes together, you can construct the list manually 
 
 	from aiohttp_route_decorator import RouteCollector, Route
 
-	route = RouteCollector()
-
-
 	async def index(request):
 		return web.Response(body=b'OK')
-
 
 	async def login(request):
 		if request.method == 'POST':
 			return web.Response(body=b'OK')
 		return web.Response(body=b'Login')
-
 
 	routes = RouteCollector([
 		Route('/', index),

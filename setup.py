@@ -8,7 +8,7 @@ aiohttp @route decorator that doesn't need the app singleton
 
 setup(
 	name='aiohttp_route_decorator',
-	version='0.1.1',
+	version='0.1.2',
 	url='https://github.com/IlyaSemenov/aiohttp_route_decorator',
 	license='BSD',
 	author='Ilya Semenov',
