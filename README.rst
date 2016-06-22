@@ -1,11 +1,12 @@
 aiohttp_route_decorator
 =======================
 
-The library provides `@route` decorator for `aiohttp.web`_.
+The library provides ``@route`` decorator for `aiohttp.web`_, resembling the contract of Flask_ ``@app.route``.
 
 .. _aiohttp.web: https://aiohttp.readthedocs.io/en/latest/web.html
+.. _Flask: http://flask.pocoo.org/docs/0.11/quickstart/#routing
 
-The imaginary `@app.route` decorator is discouraged_ for multiple_ reasons_; this one tries to solve part of those problems (the `app` doesn't need to be global at the very least).
+The imaginary ``aiohttp`` ``@app.route`` decorator is discouraged_ for multiple_ reasons_; this one tries to solve part of those problems (the ``app`` doesn't need to be global at the very least).
 
 .. _discouraged: http://aiohttp.readthedocs.io/en/stable/faq.html
 .. _multiple: https://github.com/KeepSafe/aiohttp/issues/428
@@ -23,7 +24,7 @@ Installation
 Usage
 =====
 
-Create a `route` object in each of your handler modules, and decorate the handlers:
+Create a ``route`` object in each of your handler modules, and decorate the handlers:
 
 .. code:: python
 
@@ -32,11 +33,19 @@ Create a `route` object in each of your handler modules, and decorate the handle
 	route = RouteCollector()
 
 
-	@route('GET', '/', name='index')
+	@route('/')
 	async def handler(request):
 		return web.Response(body=b'OK')
+
+
+	@route('/login/', methods=['GET', 'POST'], name='login')
+	async def handler(request):
+		if request.method == 'POST':
+			return web.Response(body=b'OK')
+		return web.Response(body=b'Login')
 		
-When you init the application, push the collected `routes` into `app.router`:
+
+When you init the application, push the collected ``routes`` into ``app.router``:
 
 .. code:: python
 
@@ -49,3 +58,15 @@ When you init the application, push the collected `routes` into `app.router`:
 		app = web.Application()
 		handlers.route.add_to_router(app.router)
 		web.run_app(app)
+
+
+Parameters reference
+--------------------
+
+``route(path, *, method='GET', methods=None, name=None, **kwargs)``
+
+- **path** (*str*) — route path. Should be started with slash (``'/'``).
+- **method** (*str*) — HTTP method for route. Should be one of ``'GET'``, ``'POST'``, ``'PUT'``, ``'DELETE'``, ``'PATCH'``, ``'HEAD'``, ``'OPTIONS'`` or ``'*'`` for any method.
+- **methods** (*List[str]*) — optional shortcut for creating several routes with different HTTP methods at once. If used, should be a list of acceptable values for ``method`` argument.
+- **name** (*str*) — optional route name.
+- **kwargs** — other parameters to be passed to ``aiohttp.web.Resource.add_route()``.
