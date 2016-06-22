@@ -34,12 +34,12 @@ Create a ``route`` object in each of your handler modules, and decorate the hand
 
 
 	@route('/')
-	async def handler(request):
+	async def index(request):
 		return web.Response(body=b'OK')
 
 
 	@route('/login/', methods=['GET', 'POST'], name='login')
-	async def handler(request):
+	async def login(request):
 		if request.method == 'POST':
 			return web.Response(body=b'OK')
 		return web.Response(body=b'Login')
@@ -70,3 +70,31 @@ Parameters reference
 - **methods** (*List[str]*) — optional shortcut for creating several routes with different HTTP methods at once. If used, should be a list of acceptable values for ``method`` argument.
 - **name** (*str*) — optional route name.
 - **kwargs** — other parameters to be passed to ``aiohttp.web.Resource.add_route()``.
+
+
+Non-decorator use
+-----------------
+
+If you prefer to keep your routes together, you can construct the list manually after your handers:
+
+.. code:: python
+
+	from aiohttp_route_decorator import RouteCollector, Route
+
+	route = RouteCollector()
+
+
+	async def index(request):
+		return web.Response(body=b'OK')
+
+
+	async def login(request):
+		if request.method == 'POST':
+			return web.Response(body=b'OK')
+		return web.Response(body=b'Login')
+
+
+	routes = RouteCollector([
+		Route('/', index),
+		Route('/login/', login, methods=['GET', 'POST'], name='login'),
+	])

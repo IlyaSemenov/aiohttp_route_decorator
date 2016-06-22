@@ -1,10 +1,10 @@
 import asyncio
 from aiohttp import web
 
-from aiohttp_route_decorator import RouteCollector
+from aiohttp_route_decorator import RouteCollector, Route
 
 
-def test_routes(app):
+def test_route_decorator(app):
 	route = RouteCollector()
 
 	@route('/')
@@ -19,9 +19,31 @@ def test_routes(app):
 	async def handler(request):
 		return web.Response(body=b'OK')
 
-	router = app.router
-	route.add_to_router(router)
+	route.add_to_router(app.router)
+	assert_router_configured(app.router)
 
+
+def test_route_list(app):
+	async def handler1(request):
+		return web.Response(body=b'OK')
+
+	async def handler2(request):
+		return web.Response(body=b'OK')
+
+	async def handler3(request):
+		return web.Response(body=b'OK')
+
+	routes = RouteCollector([
+		Route('/', handler1),
+		Route('/test', handler2, method='PUT', name='test'),
+		Route('/test_methods', handler3, methods=['GET', 'POST'], name='test_methods'),
+	])
+
+	routes.add_to_router(app.router)
+	assert_router_configured(app.router)
+
+
+def assert_router_configured(router):
 	expected_routes = [
 		('/', 'GET'),
 		('/test', 'PUT'),
