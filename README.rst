@@ -36,7 +36,11 @@ Create a ``route`` object in each of your handler modules, and decorate the hand
 	async def index(request):
 		return web.Response(body=b'OK')
 
-	@route('/login/', methods=['GET', 'POST'], name='login')
+	@route('/publish', method='POST'):
+	async def publish(request):
+		return web.Response(body=b'OK')
+
+	@route('/login', methods=['GET', 'POST'], name='login')
 	async def login(request):
 		if request.method == 'POST':
 			return web.Response(body=b'OK')
@@ -80,6 +84,9 @@ If you prefer to keep your routes together, you can construct the list manually 
 	async def index(request):
 		return web.Response(body=b'OK')
 
+	async def publish(request):
+		return web.Response(body=b'OK')
+
 	async def login(request):
 		if request.method == 'POST':
 			return web.Response(body=b'OK')
@@ -87,5 +94,6 @@ If you prefer to keep your routes together, you can construct the list manually 
 
 	routes = RouteCollector([
 		Route('/', index),
-		Route('/login/', login, methods=['GET', 'POST'], name='login'),
+		Route('/publish', publish, method='POST'),
+		Route('/login', login, methods=['GET', 'POST'], name='login'),
 	])
