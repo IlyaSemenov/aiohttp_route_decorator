@@ -36,7 +36,7 @@ Create a ``route`` object in each of your handler modules, and decorate the hand
 	async def index(request):
 		return web.Response(body=b'OK')
 
-	@route('/publish', method='POST'):
+	@route('/publish', method='POST')
 	async def publish(request):
 		return web.Response(body=b'OK')
 
@@ -102,7 +102,7 @@ You can provide common route prefix that will be prepended to all routes:
 	async def index(request):
 		return web.Response(body=b'OK')
 
-	@route('/publish', method='POST'):
+	@route('/publish', method='POST')
 	async def publish(request):
 		return web.Response(body=b'OK')
 
@@ -124,7 +124,7 @@ You can also provide the prefix within `add_to_router()` call instead:
 	async def index(request):
 		return web.Response(body=b'OK')
 
-	@route('/publish', method='POST'):
+	@route('/publish', method='POST')
 	async def publish(request):
 		return web.Response(body=b'OK')
 
@@ -146,7 +146,7 @@ You can also provide the prefix within `add_to_router()` call instead:
 	async def index(request):
 		return web.Response(body=b'OK')
 
-	@route('/publish', method='POST'):
+	@route('/publish', method='POST')
 	async def publish(request):
 		return web.Response(body=b'OK')
 
