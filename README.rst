@@ -60,18 +60,6 @@ When you init the application, push the collected ``routes`` into ``app.router``
 		web.run_app(app)
 
 
-Parameters reference
---------------------
-
-``route(path, *, method='GET', methods=None, name=None, **kwargs)``
-
-- **path** (*str*) — route path. Should be started with slash (``'/'``).
-- **method** (*str*) — HTTP method for route. Should be one of ``'GET'``, ``'POST'``, ``'PUT'``, ``'DELETE'``, ``'PATCH'``, ``'HEAD'``, ``'OPTIONS'`` or ``'*'`` for any method.
-- **methods** (*List[str]*) — optional shortcut for creating several routes with different HTTP methods at once. If used, should be a list of acceptable values for ``method`` argument.
-- **name** (*str*) — optional route name.
-- **kwargs** — other parameters to be passed to ``aiohttp.web.Resource.add_route()``.
-
-
 Non-decorator use
 -----------------
 
@@ -97,3 +85,102 @@ If you prefer to keep your routes together, you can construct the list manually 
 		Route('/publish', publish, method='POST'),
 		Route('/login', login, methods=['GET', 'POST'], name='login'),
 	])
+
+
+Prefixed routes
+---------------
+
+You can provide common route prefix that will be prepended to all routes:
+
+.. code:: python
+
+	from aiohttp_route_decorator import RouteCollector
+
+	routes = RouteCollector(prefix='/app')
+
+	@route('/')
+	async def index(request):
+		return web.Response(body=b'OK')
+
+	@route('/publish', method='POST'):
+	async def publish(request):
+		return web.Response(body=b'OK')
+
+	...
+
+	handlers.route.add_to_router(app.router)
+	# /app/ -> index
+	# /app/publish -> publish
+
+You can also provide the prefix within `add_to_router()` call instead:
+
+.. code:: python
+
+	from aiohttp_route_decorator import RouteCollector
+
+	routes = RouteCollector()
+
+	@route('/')
+	async def index(request):
+		return web.Response(body=b'OK')
+
+	@route('/publish', method='POST'):
+	async def publish(request):
+		return web.Response(body=b'OK')
+
+	...
+
+	handlers.route.add_to_router(app.router, prefix='/app')
+	# /app/ -> index
+	# /app/publish -> publish
+
+...or use both:
+
+.. code:: python
+
+	from aiohttp_route_decorator import RouteCollector
+
+	routes = RouteCollector(prefix='/app')
+
+	@route('/')
+	async def index(request):
+		return web.Response(body=b'OK')
+
+	@route('/publish', method='POST'):
+	async def publish(request):
+		return web.Response(body=b'OK')
+
+	...
+
+	handlers.route.add_to_router(app.router, prefix='/project')
+	# /project/app/ -> index
+	# /project/app/publish -> publish
+
+The non-decorator version of `RouteCollector` can also accept prefix:
+
+.. code:: python
+
+	from aiohttp_route_decorator import RouteCollector, Route
+
+	async def index(request):
+		return web.Response(body=b'OK')
+
+	async def publish(request):
+		return web.Response(body=b'OK')
+
+	routes = RouteCollector(prefix='/app', routes=[
+		Route('/', index),
+		Route('/publish', publish, method='POST'),
+	])
+
+
+Parameters reference
+--------------------
+
+``route(path, *, method='GET', methods=None, name=None, **kwargs)``
+
+- **path** (*str*) — route path. Should be started with slash (``'/'``).
+- **method** (*str*) — HTTP method for route. Should be one of ``'GET'``, ``'POST'``, ``'PUT'``, ``'DELETE'``, ``'PATCH'``, ``'HEAD'``, ``'OPTIONS'`` or ``'*'`` for any method.
+- **methods** (*List[str]*) — optional shortcut for creating several routes with different HTTP methods at once. If used, should be a list of acceptable values for ``method`` argument.
+- **name** (*str*) — optional route name.
+- **kwargs** — other parameters to be passed to ``aiohttp.web.Resource.add_route()``.
