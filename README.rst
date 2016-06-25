@@ -112,7 +112,8 @@ You can provide common route prefix that will be prepended to all routes:
 	# /app/ -> index
 	# /app/publish -> publish
 
-You can also provide the prefix within `add_to_router()` call instead:
+
+You can also provide the prefix within ``add_to_router()`` call instead:
 
 .. code:: python
 
@@ -133,6 +134,7 @@ You can also provide the prefix within `add_to_router()` call instead:
 	handlers.route.add_to_router(app.router, prefix='/app')
 	# /app/ -> index
 	# /app/publish -> publish
+
 
 ...or use both:
 
@@ -156,7 +158,8 @@ You can also provide the prefix within `add_to_router()` call instead:
 	# /project/app/ -> index
 	# /project/app/publish -> publish
 
-The non-decorator version of `RouteCollector` can also accept prefix:
+
+The non-decorator version of ``RouteCollector`` can also accept prefix:
 
 .. code:: python
 
