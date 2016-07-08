@@ -18,7 +18,7 @@ Installation
 
 ::
 
-        pip install aiohttp_session_decorator
+        pip install aiohttp_route_decorator
 
 
 Usage
