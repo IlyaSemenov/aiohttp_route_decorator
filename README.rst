@@ -28,6 +28,8 @@ Create a ``route`` object in each of your handler modules, and decorate the hand
 
 .. code:: python
 
+	# myapp/handlers.py
+
 	from aiohttp_route_decorator import RouteCollector
 
 	route = RouteCollector()
