@@ -1,10 +1,6 @@
-# coding=utf-8
-from distutils.core import setup
+"""aiohttp @route decorator that doesn't need the app singleton"""
 from setuptools import setup, find_packages
 
-"""
-aiohttp @route decorator that doesn't need the app singleton
-"""
 
 setup(
 	name='aiohttp_route_decorator',
