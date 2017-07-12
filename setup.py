@@ -10,7 +10,7 @@ setup(
 	author='Ilya Semenov',
 	author_email='ilya@semenov.co',
 	description=__doc__,
-	long_description=open('README.rst').read(),
+	long_description=open('README.rst', encoding='utf-8').read(),
 	packages=['aiohttp_route_decorator'],
 	install_requires=['aiohttp>=0.21.6'],
 	classifiers=[],
