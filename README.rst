@@ -13,6 +13,14 @@ The imaginary ``aiohttp`` ``@app.route`` decorator is discouraged_ for multiple_
 .. _reasons: https://github.com/KeepSafe/aiohttp/pull/195
 
 
+Deprecation warning
+-------------------
+
+This package was created for older aiohttp releases. As of aiohttp 2.3, there is built-in RouteTableDef_ class which works pretty much the same way.
+
+.. _RouteTableDef: https://docs.aiohttp.org/en/latest/web_reference.html#aiohttp-web-route-table-def
+
+
 Installation
 ============
 
